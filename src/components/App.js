@@ -16,7 +16,8 @@ class App extends Component {
     super(props);
 
     this.state = {
-      data:[2,3,0,4,0]
+      data:[20,30,10,40,50],
+      sort: 'ascending'
     };
 
     this.dataSortAscending = this.dataSortAscending.bind(this);
@@ -32,11 +33,13 @@ class App extends Component {
   }
 
   dataSortAscending() {
-       this.setState({data:[0,1,2,3,4]});
+       //this.setState({data:[10,20,30,40,50]});
+       this.setState({sort:'ascending'});
   }
 
   dataSortDescending() {
-      this.setState({data:[4,3,2,1,0]})
+      //this.setState({data:[50,40,30,20,10]})
+      this.setState({sort:'descending'});
   }
 
   render() {
@@ -48,7 +51,9 @@ class App extends Component {
         </div>
       		<SimpleComponent 
           data={this.state.data} 
-          size={[200,250]}/>
+          size={[200,350]}
+          sort={this.state.sort}
+          />
       </div>
       )
   }
