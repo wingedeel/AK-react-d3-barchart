@@ -14,29 +14,47 @@ class App extends Component {
 
   constructor(props) {
     super(props);
+
+    this.state = {
+      data:[2,3,0,4,0]
+    };
+
+    this.dataSortAscending = this.dataSortAscending.bind(this);
+    this.dataSortDescending = this.dataSortDescending.bind(this);
   }
 
 
   componentDidMount() {
   }
 
+  handleClick(){
+    console.log('handleClick');
+  }
+
+  dataSortAscending() {
+       this.setState({data:[0,1,2,3,4]});
+  }
+
+  dataSortDescending() {
+      this.setState({data:[4,3,2,1,0]})
+  }
 
   render() {
      return (
       	<div className="app">
           <div id="buttonContainer">
-          <button id="sortAscending">Sort Ascending</button>
-          <button id="sortDescending">Sort Descending</button>
+          <button id="sortAscending" onClick={this.dataSortAscending}>Sort Ascending</button>
+          <button id="sortDescending" onClick={this.dataSortDescending}>Sort Descending</button>
         </div>
       		<SimpleComponent 
-          data={
-            [ 5, 10, 13, 19, 21, 25, 22, 18, 15, 13,
-            11, 12, 15, 20, 18, 17, 16, 18, 23, 25 ]
-          } 
-          size={[600,250]}/>
+          data={this.state.data} 
+          size={[200,250]}/>
       </div>
       )
   }
 }
 
 export default App;
+
+
+// On sort button click, sort the SimpleComponents data

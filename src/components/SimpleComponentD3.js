@@ -15,6 +15,7 @@ export default class SimpleComponentD3 {
      
     this.create(el, props);
     this.update(el, props);
+    this.sort(el, props, "descending");
  
     this.handleMouseover = this.handleMouseover.bind(this);
     this.handleMouseout = this.handleMouseout.bind(this);
@@ -68,10 +69,13 @@ export default class SimpleComponentD3 {
 
 
   update(el, props) {
+    console.log('-----------')
+    console.log('update');
+    console.log('props.data ', props.data)
 
-    this.adjustSize(el);
-    var w = 600;
-    var h = 250;
+    //this.adjustSize(el);
+    var w = props.size[0];
+    var h = props.size[1];
     var padding = 25;
     var dataset = props.data;
 
@@ -219,6 +223,47 @@ export default class SimpleComponentD3 {
     //   .remove();
 
   }
+
+  // sortType: 'ascending', 'descending'
+  sort(el, props, sortType){
+     var w = 600;
+    var h = 250;
+    var padding = 25;
+    var dataset = props.data;
+
+    var xScale = d3.scale.ordinal()
+            .domain(d3.range(dataset.length))
+            .rangeRoundBands([ padding, w - padding ], 0.05);
+
+    var yScale = d3.scale.linear()
+            .domain([ 0, d3.max(dataset) ])
+            .rangeRound([ h - padding, padding ]);
+
+    //Configure y axis generator
+    var yAxis = d3.svg.axis()
+            .scale(yScale)
+            .orient("left")
+            .ticks(5);
+
+    const groups = this.svg.selectAll('rect');
+    groups.sort(function(a, b) {
+              // return sortType==="ascending": d3.ascending(a, b) ? d3.descending(a, b);
+              if (sortType === "ascending"){
+                return d3.ascending(a, b);
+              } else {
+                d3.descending(a, b);
+              }
+          })
+          .transition()
+          .delay(function(d, i) {
+            return i * 50;
+          })
+          .duration(1000)
+          .attr("transform", function(d, i) {
+              return "translate(" + xScale(i) + ",0)";
+          });
+  }
+
 
   handleMouseover() {
     console.log('tooltip mouse over ')
