@@ -51,7 +51,7 @@ class App extends Component {
         </div>
       		<SimpleComponent 
           data={this.state.data} 
-          size={[200,350]}
+          size={[700,350]}
           sort={this.state.sort}
           />
       </div>

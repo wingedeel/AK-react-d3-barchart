@@ -72,7 +72,7 @@ export default class SimpleComponentD3 {
             })
       .attr("y", d => props.size[1] - yScale(d))
       .attr("height", d => yScale(d))
-      .attr("width", 25)
+      .attr("width", 100)
       .on('mouseover', this.handleMouseover )
       .on('mouseout', this.handleMouseout )
 
